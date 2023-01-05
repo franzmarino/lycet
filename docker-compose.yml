@@ -38,7 +38,7 @@ services:
       - nginx-proxy
       - letsencrypt
     volumes:
-      - /demo/data:/data
+      - /demo/data:data
 volumes: 
   certs:
   html:
