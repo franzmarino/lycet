@@ -37,6 +37,8 @@ services:
     depends_on:
       - nginx-proxy
       - letsencrypt
+    volumes:
+      - /demo/data:/data
 volumes: 
   certs:
   html:
