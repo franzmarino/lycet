@@ -14,10 +14,26 @@ services:
       - html:/usr/share/nginx/html
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion:stable
+    restart: always
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - confd:/etc/nginx/conf.d
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   lycet:
     image: lycet 
-    ports:
-      - "8000:8000"
+    restart: always
+    expose:
+      - "8000"
+    environment:
+      - VIRTUAL_HOST=facturacion.factigo.com
+      - LETSENCRYPT_HOST=facturacion.factigo.com
+      - LETSENCRYPT_EMAIL=franz.1996.2015@gmail.com
 
 volumes:
   certs:
