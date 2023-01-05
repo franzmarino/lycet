@@ -29,7 +29,7 @@ services:
     image: lycet 
     restart: always
     expose:
-      - "80:8000"
+      - "8000"
     environment:
       - VIRTUAL_HOST=facturacion.factigo.com
       - LETSENCRYPT_HOST=facturacion.factigo.com
