@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   nginx-proxy:
-    image: budry/jwilder-nginx-proxy-arm
+    image: jwilder/nginx-proxy
     restart: always
     ports:
       - "80:80"
@@ -9,18 +9,18 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - certs:/etc/nginx/certs:ro
-      - confd:/etc/nginx/conf.d
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
   letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion:stable
+    image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
     volumes:
       - certs:/etc/nginx/certs:rw
-      - confd:/etc/nginx/conf.d
       - vhostd:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -34,9 +34,10 @@ services:
       - VIRTUAL_HOST=facturacion.factigo.com
       - LETSENCRYPT_HOST=facturacion.factigo.com
       - LETSENCRYPT_EMAIL=franz.1996.2015@gmail.com
-
-volumes:
+    depends_on:
+      - nginx-proxy
+      - letsencrypt
+volumes: 
   certs:
   html:
   vhostd:
-  confd:
