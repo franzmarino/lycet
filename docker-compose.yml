@@ -18,3 +18,9 @@ services:
     image: lycet 
     ports:
       - "8000:8000"
+
+volumes:
+  certs:
+  html:
+  vhostd:
+  confd:
