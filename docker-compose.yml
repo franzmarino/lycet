@@ -26,7 +26,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   lycet:
-    build: . 
+    image: lycet 
     restart: always
     expose:
       - "8000"
